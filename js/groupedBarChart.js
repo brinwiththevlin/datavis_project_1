@@ -95,7 +95,7 @@ class groupedBarChart {
         let vis = this;
 
         vis.xScale.domain(vis.groups)
-        vis.yScale.domain([0,40])
+        vis.yScale.domain([0,d3.max(vis.data, d => d.false)])
 
         // Another scale for subgroup position?
         vis.xSubgroup = d3.scaleBand()
