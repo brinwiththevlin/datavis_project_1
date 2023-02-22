@@ -44,7 +44,7 @@ d3.csv('.\\data\\exoplanets-1.csv')
     star_bar.updateVis();
     spec_bar = new Barchart({ parentElement: '#chart3'}, data, "st_spectype_code", (({ A,F,K,G,M, unknown}) => ({ A,F,K,G,M, unknown })));
     spec_bar.updateVis();
-    disc_method_bar = new Barchart({ parentElement: '#chart4'}, data, "discoverymethod", filter=undefined, rotation=10);
+    disc_method_bar = new Barchart({ parentElement: '#chart4', containerWidth: 800}, data, "discoverymethod", filter=undefined, rotation=10);
     disc_method_bar.updateVis();
     hab_bar = new groupedBarChart({ parentElement: "#chart5"}, data, 'spectral type', 'count');
     hab_bar.updateVis();

@@ -8,7 +8,7 @@ class LineChart {
   constructor(_config, _data, date_col) {
     this.config = {
       parentElement: _config.parentElement,
-      containerWidth: _config.containerWidth || 800,
+      containerWidth: _config.containerWidth || 300,
       containerHeight: _config.containerHeight || 240,
       margin: _config.margin || {top: 25, right: 30, bottom: 30, left: 50}
     }

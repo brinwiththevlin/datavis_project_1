@@ -9,7 +9,7 @@ class groupedBarChart {
       // Configuration object with defaults
       this.config = {
         parentElement: _config.parentElement,
-        containerWidth: _config.containerWidth || 710,
+        containerWidth: _config.containerWidth || 310,
         containerHeight: _config.containerHeight || 200,
         margin: _config.margin || {top: 25, right: 5, bottom: 25, left: 50},
         reverseOrder: _config.reverseOrder || false,

@@ -9,7 +9,7 @@ class Barchart {
       // Configuration object with defaults
       this.config = {
         parentElement: _config.parentElement,
-        containerWidth: _config.containerWidth || 710,
+        containerWidth: _config.containerWidth || 310,
         containerHeight: _config.containerHeight || 200,
         margin: _config.margin || {top: 10, right: 5, bottom: 25, left: 40},
         reverseOrder: _config.reverseOrder || false,
@@ -78,7 +78,7 @@ class Barchart {
       vis.yAxis = d3.axisLeft(vis.yScale)
           .ticks(6)
           .tickSizeOuter(0)
-          .tickFormat(d3.formatPrefix('.1s', 1e3)); // Format y-axis ticks as millions
+          .tickFormat(d3.formatPrefix('.1s', 1e3)); // Format y-axis ticks as thousands
   
       // Define size of SVG drawing area
       vis.svg = d3.select(vis.config.parentElement)
@@ -174,6 +174,7 @@ class Barchart {
           .selectAll('text')
             .style("text-anchor", "start")
             .attr('transform',`rotate(${vis.rotate})`)
+            c
   
       vis.yAxisG.call(vis.yAxis);
       
