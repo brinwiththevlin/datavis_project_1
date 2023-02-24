@@ -13,7 +13,7 @@ class Scatterplot {
       margin: _config.margin || {top: 25, right: 20, bottom: 20, left: 45},
       tooltipPadding: _config.tooltipPadding || 15
     }
-    this.data = _data;
+    this.data = _data.filter(d => {return d.pl_rade !== 0 && d.pl_bmasse!== 0});
     this.initVis();
   }
   
@@ -32,10 +32,10 @@ class Scatterplot {
     //     .range(['#d3eecd', '#7bc77e', '#2a8d46']) // light green to dark green
     //     .domain(['Easy','Intermediate','Difficult']);
 
-    vis.xScale = d3.scaleLinear()
+    vis.xScale = d3.scaleLog()
         .range([0, vis.width]);
 
-    vis.yScale = d3.scaleLinear()
+    vis.yScale = d3.scaleLog()
         .range([vis.height, 0]);
 
     // Initialize axes
@@ -99,8 +99,8 @@ class Scatterplot {
     vis.yValue = d => d.pl_bmasse;
 
     // Set the scale input domains
-    vis.xScale.domain([0, d3.max(vis.data, vis.xValue)]);
-    vis.yScale.domain([0, d3.max(vis.data, vis.yValue)]);
+    vis.xScale.domain([1e-3, d3.max(vis.data, vis.xValue)]);
+    vis.yScale.domain([1e-3, d3.max(vis.data, vis.yValue)]);
 
     vis.renderVis();
   }

@@ -9,7 +9,7 @@ class Barchart {
       // Configuration object with defaults
       this.config = {
         parentElement: _config.parentElement,
-        containerWidth: _config.containerWidth || 310,
+        containerWidth: _config.containerWidth || 200,
         containerHeight: _config.containerHeight || 200,
         margin: _config.margin || {top: 10, right: 5, bottom: 25, left: 40},
         reverseOrder: _config.reverseOrder || false,
@@ -174,7 +174,7 @@ class Barchart {
           .selectAll('text')
             .style("text-anchor", "start")
             .attr('transform',`rotate(${vis.rotate})`)
-            c
+            
   
       vis.yAxisG.call(vis.yAxis);
       

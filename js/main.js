@@ -54,8 +54,7 @@ d3.csv('.\\data\\exoplanets-1.csv')
     radius_scatter.updateVis();
     dist_hist = new Histogram({ parentElement: '#chart8'}, data)
     dist_hist.updateVis();
-    // hab_bar = new StackedBarChart({ parentElement: '#chart5'}, data, 'habitable', 'st_spectype_code', (({ A,F,K,G,M}) => ({ A,F,K,G,M})))
-    // hab_bar.updateVis();
+    data_table = new Table({ parentElement: "#table"}, data)
 
     console.log(data)
 })
