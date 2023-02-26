@@ -9,7 +9,7 @@ class groupedBarChart {
       // Configuration object with defaults
       this.config = {
         parentElement: _config.parentElement,
-        containerWidth: _config.containerWidth || 710,
+        containerWidth: _config.containerWidth || 200,
         containerHeight: _config.containerHeight || 200,
         margin: _config.margin || {top: 25, right: 5, bottom: 25, left: 50},
         reverseOrder: _config.reverseOrder || false,
@@ -95,7 +95,7 @@ class groupedBarChart {
         let vis = this;
 
         vis.xScale.domain(vis.groups)
-        vis.yScale.domain([0,40])
+        vis.yScale.domain([0,d3.max(vis.data, d => d.false)])
 
         // Another scale for subgroup position?
         vis.xSubgroup = d3.scaleBand()

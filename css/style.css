@@ -2,9 +2,22 @@ body {
     padding: 30px;
     background: #f8f8f8;
   }
+  .container-container {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    height: auto;
+  }
   .container {
-    width: 740px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+  }
+ 
+  .item {
+    flex-basis: 100px;
+    /* height: 100px; */
+    margin: 5px;
   }
   #footer {
     font-size: 11px;
@@ -24,19 +37,6 @@ body {
   .bar:hover {
     fill: #3f7275;
     transition: fill ease-in-out 200ms;
-  }
-  /* TODO: fix the colors */
-  .inner rect{
-    fill: #6080b5;
-  }
-  .inner rect:hover{
-    fill: #6080b5;
-  }
-  .outer rect {
-    fill: #d4c32d;
-  }
-  .outer rect:hover {
-    fill: #d4c32d;
   }
   .axis text {
     fill: #666;
@@ -78,3 +78,7 @@ body {
     font-size: 10px;
     color: #888;
   }
+
+.table {
+  width: max-content;
+}

@@ -8,23 +8,13 @@ class LineChart {
   constructor(_config, _data, date_col) {
     this.config = {
       parentElement: _config.parentElement,
-      containerWidth: _config.containerWidth || 800,
+      containerWidth: _config.containerWidth || 300,
       containerHeight: _config.containerHeight || 240,
       margin: _config.margin || {top: 25, right: 30, bottom: 30, left: 50}
     }
 
-    this.freqDict = {}
-    _data.forEach(d => {
-      if (this.freqDict.hasOwnProperty(d[date_col])){
-        this.freqDict[d[date_col]] += 1;
-      }
-      else{
-        this.freqDict[d[date_col]] = 1;
-      }
-    });
-    this.data = this.freqDict;
-    this._array = Object.entries(this.freqDict);
-    this.data = this._array.map(([k, v]) => ({"year": k, "count": v}));
+    this.date_col = date_col;
+    this.data = _data;
     delete this._array;
     this.initVis();
   }
@@ -97,7 +87,6 @@ class LineChart {
         .attr('r', 4);
 
     vis.tooltip.append('text');
-    vis.updateVis();
   }
 
   /**
@@ -105,6 +94,19 @@ class LineChart {
    */
   updateVis() {
     let vis = this;
+
+    this.freqDict = {}
+    this.data.forEach(d => {
+      if (this.freqDict.hasOwnProperty(d[vis.date_col])){
+        this.freqDict[d[vis.date_col]] += 1;
+      }
+      else{
+        this.freqDict[d[vis.date_col]] = 1;
+      }
+    });
+    this.data = this.freqDict;
+    this._array = Object.entries(this.freqDict);
+    this.data = this._array.map(([k, v]) => ({"year": k, "count": v}));
     
     vis.xValue = d => +d.year;
     vis.yValue = d => d.count;
