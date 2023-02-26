@@ -13,7 +13,7 @@ class Scatterplot {
       margin: _config.margin || {top: 25, right: 20, bottom: 20, left: 45},
       tooltipPadding: _config.tooltipPadding || 15
     }
-    this.data = _data.filter(d => {return d.pl_rade !== 0 && d.pl_bmasse!== 0});
+    this.data = data;
     this.initVis();
   }
   
@@ -48,7 +48,7 @@ class Scatterplot {
     vis.yAxis = d3.axisLeft(vis.yScale)
         .ticks(6)
         .tickSize(-vis.width - 10)
-        .tickFormat(d3.formatPrefix('.1s', 1e3))
+        // .tickFormat(d3.formatPrefix('.1s', 1e3))
         .tickPadding(10);
 
     // Define size of SVG drawing area
@@ -92,15 +92,15 @@ class Scatterplot {
    */
   updateVis() {
     let vis = this;
-    
+    vis.data = vis.data.filter(d => {return d.pl_rade !== 0 && d.pl_bmasse !== 0});
     // Specificy accessor functions
     // vis.colorValue = d => d.difficulty;
     vis.xValue = d => d.pl_rade;
     vis.yValue = d => d.pl_bmasse;
 
     // Set the scale input domains
-    vis.xScale.domain([1e-3, d3.max(vis.data, vis.xValue)]);
-    vis.yScale.domain([1e-3, d3.max(vis.data, vis.yValue)]);
+    vis.xScale.domain([1e-1, d3.max(vis.data, vis.xValue)]);
+    vis.yScale.domain([1e-2, d3.max(vis.data, vis.yValue)]);
 
     vis.renderVis();
   }

@@ -15,37 +15,11 @@ class Barchart {
         reverseOrder: _config.reverseOrder || false,
         tooltipPadding: _config.tooltipPadding || 15
       }
-      // this.data = _data;
-      this.data = {};
-      _data.forEach(d =>{
-        if (d[_x] in this.data){
-          this.data[d[_x]]["count"] += 1;
-        }
-        else if (d[_x] == undefined){
-          if ("unknown" in this.data){
-            this.data['unknown']["count"] += 1
-          }
-          else{
-            var entry = {}
-            entry[_x] = "unknown"
-            entry["count"] = 1
-            this.data['unknown'] = entry;
-          }
-        }
-        else{
-          var entry = {}
-          entry[_x] = d[_x]
-          entry["count"] = 1
-          this.data[d[_x]] = entry;
-        };
-      })
-      if (filter) {
-        this.data  = (filter)(this.data)
-      }
+      this.data = _data;
 
-      this.data  = Object.values(this.data)
-      console.log(this.data);
-      this.data.sort((a,b) => b["count"] - a["count"]);    
+      // this.data.sort((a, b) => a[1] - b[1])
+
+      this.filter = filter
       this.x = _x;
       this.y = "count";
       this.rotate = rotation;
@@ -115,11 +89,19 @@ class Barchart {
       if (vis.config.reverseOrder) {
         vis.data.reverse();
       }
+
+      vis.data = Array.from(d3.rollup(vis.data, v => v.length, d => d[vis.x]));
+      
+      if (vis.filter){
+       vis.data = vis.data.filter( d => vis.filter.includes(d[0]))
+      }
+
+      vis.data.sort((a, b) => a[1] - b[1])
   
       
       // Specificy x- and y-accessor functions
-      vis.xValue = d => d[vis.x];
-      vis.yValue = d => d[vis.y];
+      vis.xValue = d => d[0];
+      vis.yValue = d => d[1];
   
       // Set the scale input domains
       vis.xScale.domain(vis.data.map(vis.xValue));
@@ -156,7 +138,7 @@ class Barchart {
               .style('display','block')
               .style('opacity', 1)
               // Format number with million and thousand separator
-              .html(`<div class="tooltip-label">${vis.x}</div>${d3.format(',')(d[vis.y])}`);
+              .html(`<div class="tooltip-label">${vis.x}</div>${d3.format(',')(d[1])}`);
           })
           .on('mousemove', (event) => {
             d3.select('#tooltip')
@@ -165,6 +147,17 @@ class Barchart {
           })
           .on('mouseleave', () => {
             d3.select('#tooltip').style('opacity', 0);
+          })
+          .on('click', function(event, d) {
+            console.log(d);
+            const isActive = planetFilter.length > 0;
+            if (isActive) {
+              planetFilter = []; // Remove filter
+            } else {
+              data.forEach(e=> {if (e[vis.x] == d[0]) {planetFilter.push(e.pl_name)}}); // Append filter
+            }
+            filterData(); // Call global function to update scatter plot
+            d3.select(this).classed('active', !isActive); // Add class to style active filters with CSS
           });
   
       // Update axes
